@@ -9,16 +9,24 @@
 # https://github.com/docker/awesome-compose
 services:
   app-web:
+    command:
+      - python3
+      - -m
+      - http.server
+      - "8000"
     build:
       dockerfile: Dockerfile
       context: .
     ports:
-      - 8001:8000
+      - 8000:8000
     develop:
       watch:
         - action: rebuild
           path: ./src
           target: /app
+        - action: rebuild
+          path: requirements.txt
+          target: requirements.txt
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
